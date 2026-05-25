@@ -33,7 +33,7 @@ export default function Navbar() {
         >
           <Bitcoin className="h-4 w-4" style={{ color: C_BTC }} />
         </div>
-        <span className="font-display text-base font-semibold tracking-wide text-white">Felixfolio</span>
+        <span className="font-display text-base font-semibold tracking-wide text-white">Félixfolio</span>
       </div>
       <div className="flex items-center gap-2">
         <LanguageToggle />

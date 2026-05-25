@@ -1,6 +1,6 @@
-# Felixfolio
+# Félixfolio
 
-A personal Bitcoin DCA tracker built as a gift for Felix (my nephew), unlocking on June 17, 2044, when he turns 18. Deployed on Arbitrum One.
+A personal Bitcoin DCA tracker built as a gift for Félix (my nephew), unlocking on June 17, 2044, when he turns 18. Deployed on Arbitrum One.
 
 18 years of weekly €25 DCA — tracked, projected, and visualized as a scroll journey from newborn to adult.
 
@@ -123,7 +123,7 @@ Scenarios:
 
 ## Unlock date
 
-June 17, 2044 — Felix's 18th birthday. The contract on Arbitrum One holds the WBTC until this date.
+June 17, 2044 — Félix's 18th birthday. The contract on Arbitrum One holds the WBTC until this date.
 
 ---
 

@@ -96,16 +96,16 @@ const en: Translations = {
   milestone_7:          'Any day now...',
 
   final_date:           'June 17, 2044',
-  final_title_pre:      'Felix turns ',
+  final_title_pre:      'Félix turns ',
   final_title_post:     '',
   final_subtitle:       'The gift unlocks.',
-  final_at18:           'At 18, Felix could have',
+  final_at18:           'At 18, Félix could have',
   final_disclaimer:     '€25/week DCA · Not financial advice',
 
   chart_label:          'Projection',
   chart_title:          'Bitcoin DCA Growth',
   chart_subtitle:       (value) => `€25/week · three scenarios · starting ${value} today`,
-  chart_at18:           'At 18, Felix could have',
+  chart_at18:           'At 18, Félix could have',
   chart_disclaimer:     '€25/week DCA · BTC price projections use the same historical growth rate · Not financial advice',
 
   scenario_base_badge:  'Base Case',
@@ -123,7 +123,7 @@ const en: Translations = {
   bull_headline: 'Early-cycle territory: aggressive but not impossible',
   bull_body:     "60% mirrors Bitcoin's DCA returns during the 2015–2020 window (~65% CAGR). Sustaining it through 2044 would require a major new adoption wave: sovereign wealth funds, central-bank reserves, or Bitcoin becoming the settlement layer of global finance. Over an 18-year horizon that ends in 2044, it's less far-fetched than it sounds today.",
 
-  footer: 'Felixfolio · For Felix · Unlocking June 17, 2044',
+  footer: 'Félixfolio · For Félix · Unlocking June 17, 2044',
 };
 
 // ── Spanish ───────────────────────────────────────────────────────────────────
@@ -160,16 +160,16 @@ const es: Translations = {
   milestone_7:          'Ya casi...',
 
   final_date:           '17 de junio de 2044',
-  final_title_pre:      'Felix cumple ',
+  final_title_pre:      'Félix cumple ',
   final_title_post:     '',
   final_subtitle:       'El regalo se desbloquea.',
-  final_at18:           'A los 18, Felix podría tener',
+  final_at18:           'A los 18, Félix podría tener',
   final_disclaimer:     '€25/semana DCA · No es asesoramiento financiero',
 
   chart_label:          'Proyección',
   chart_title:          'Crecimiento del DCA en Bitcoin',
   chart_subtitle:       (value) => `€25/semana · tres escenarios · partiendo de ${value} hoy`,
-  chart_at18:           'A los 18, Felix podría tener',
+  chart_at18:           'A los 18, Félix podría tener',
   chart_disclaimer:     '€25/semana DCA · Las proyecciones del precio de BTC usan la misma tasa de crecimiento histórica · No es asesoramiento financiero',
 
   scenario_base_badge:  'Caso base',
@@ -187,7 +187,7 @@ const es: Translations = {
   bull_headline: 'Territorio de ciclo temprano: agresivo pero no imposible',
   bull_body:     'El 60% refleja los retornos DCA de Bitcoin durante la ventana 2015–2020 (~65% CAGR). Mantenerlo hasta 2044 requeriría una gran ola de adopción: fondos soberanos, reservas de bancos centrales, o Bitcoin como capa de liquidación de las finanzas globales. En un horizonte de 18 años que termina en 2044, es menos descabellado de lo que suena hoy.',
 
-  footer: 'Felixfolio · Para Felix · Se desbloquea el 17 de junio de 2044',
+  footer: 'Félixfolio · Para Félix · Se desbloquea el 17 de junio de 2044',
 };
 
 // ── French ────────────────────────────────────────────────────────────────────
@@ -224,16 +224,16 @@ const fr: Translations = {
   milestone_7:          'Plus que quelques jours...',
 
   final_date:           '17 juin 2044',
-  final_title_pre:      'Felix a ',
+  final_title_pre:      'Félix a ',
   final_title_post:     ' ans',
   final_subtitle:       'Le cadeau se débloque.',
-  final_at18:           'À 18 ans, Felix pourrait avoir',
+  final_at18:           'À 18 ans, Félix pourrait avoir',
   final_disclaimer:     '€25/semaine DCA · Pas un conseil financier',
 
   chart_label:          'Projection',
   chart_title:          'Croissance du DCA Bitcoin',
   chart_subtitle:       (value) => `€25/semaine · trois scénarios · à partir de ${value} aujourd'hui`,
-  chart_at18:           'À 18 ans, Felix pourrait avoir',
+  chart_at18:           'À 18 ans, Félix pourrait avoir',
   chart_disclaimer:     "€25/semaine DCA · Les projections du prix BTC utilisent le même taux de croissance historique · Pas un conseil financier",
 
   scenario_base_badge:  'Cas de base',
@@ -251,7 +251,7 @@ const fr: Translations = {
   bull_headline: 'Territoire de début de cycle : ambitieux mais pas impossible',
   bull_body:     "60% reflète les rendements DCA de Bitcoin sur la fenêtre 2015–2020 (~65% CAGR). Le maintenir jusqu'en 2044 nécessiterait une grande vague d'adoption : fonds souverains, réserves de banques centrales ou Bitcoin comme couche de règlement de la finance mondiale. Sur un horizon de 18 ans se terminant en 2044, c'est moins farfelu qu'il n'y paraît.",
 
-  footer: 'Felixfolio · Pour Felix · Déblocage le 17 juin 2044',
+  footer: 'Félixfolio · Pour Félix · Déblocage le 17 juin 2044',
 };
 
 // ── German ────────────────────────────────────────────────────────────────────
@@ -288,16 +288,16 @@ const de: Translations = {
   milestone_7:          'Jeden Moment...',
 
   final_date:           '17. Juni 2044',
-  final_title_pre:      'Felix wird ',
+  final_title_pre:      'Félix wird ',
   final_title_post:     '',
   final_subtitle:       'Das Geschenk wird freigeschaltet.',
-  final_at18:           'Mit 18 könnte Felix haben',
+  final_at18:           'Mit 18 könnte Félix haben',
   final_disclaimer:     '€25/Woche DCA · Keine Anlageberatung',
 
   chart_label:          'Projektion',
   chart_title:          'Bitcoin-DCA-Wachstum',
   chart_subtitle:       (value) => `€25/Woche · drei Szenarien · ausgehend von ${value} heute`,
-  chart_at18:           'Mit 18 könnte Felix haben',
+  chart_at18:           'Mit 18 könnte Félix haben',
   chart_disclaimer:     '€25/Woche DCA · BTC-Preisprojektionen verwenden die gleiche historische Wachstumsrate · Keine Anlageberatung',
 
   scenario_base_badge:  'Basisszenario',
@@ -315,7 +315,7 @@ const de: Translations = {
   bull_headline: 'Frühe Zykluszone: ehrgeizig, aber nicht unmöglich',
   bull_body:     '60% spiegelt die DCA-Renditen von Bitcoin im Fenster 2015–2020 (~65% CAGR) wider. Dies bis 2044 aufrechtzuerhalten würde eine große neue Adoptionswelle erfordern: Staatsfonds, Zentralbankreserven oder Bitcoin als Abrechnungsschicht der globalen Finanzen. Über einen 18-jährigen Horizont bis 2044 ist das weniger abwegig, als es heute klingt.',
 
-  footer: 'Felixfolio · Für Felix · Freischaltung am 17. Juni 2044',
+  footer: 'Félixfolio · Für Félix · Freischaltung am 17. Juni 2044',
 };
 
 export const TRANSLATIONS: Record<Lang, Translations> = { en, es, fr, de };

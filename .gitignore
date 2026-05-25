@@ -34,3 +34,5 @@ yarn-error.log*
 
 # misc
 *.pem
+.vercel
+.env*.local

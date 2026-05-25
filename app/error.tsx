@@ -24,7 +24,7 @@ export default function Error({
       >
         <Bitcoin className="h-7 w-7" style={{ color: '#F7931A' }} />
       </div>
-      <h1 className="font-display text-3xl font-bold text-white mb-2">Felixfolio</h1>
+      <h1 className="font-display text-3xl font-bold text-white mb-2">Félixfolio</h1>
       <p className="text-slate-400 text-sm mb-1">Unable to load portfolio data.</p>
       <p className="text-slate-600 text-xs mb-8 font-mono">
         {error.digest ? `ref: ${error.digest}` : 'Check your connection and try again.'}

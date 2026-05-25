@@ -116,7 +116,7 @@ export default function LandingHero({ totalEurValue, totalInvested, btcBalance }
 
             {/* Title */}
             <h1 className="font-display text-7xl lg:text-8xl font-bold leading-none mb-4">
-              <span style={{ color: C_BTC }}>For Felix</span>
+              <span style={{ color: C_BTC }}>For Félix</span>
             </h1>
             <p className="text-slate-400 text-lg lg:text-xl mb-2">
               {t.hero_subtitle}

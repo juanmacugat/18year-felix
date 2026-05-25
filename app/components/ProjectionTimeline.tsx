@@ -595,6 +595,18 @@ export default function ProjectionTimeline({ totalEurValue, totalInvested, btcPr
 
 // ── Sub-components ────────────────────────────────────────────────────────────
 
+function valueFontSize(value: string, variant: 'card' | 'overlay'): string {
+  const len = value.length;
+  if (variant === 'overlay') {
+    if (len <= 10) return 'text-lg';
+    if (len <= 14) return 'text-base';
+    return 'text-sm';
+  }
+  if (len <= 10) return 'text-2xl';
+  if (len <= 14) return 'text-xl';
+  return 'text-lg';
+}
+
 function FinalCard({
   label, rate, portfolioValue, btcPrice, color, featured, scenario, isSelected, onSelect, fmt,
 }: {
@@ -609,7 +621,7 @@ function FinalCard({
       type="button"
       aria-pressed={isSelected}
       onClick={() => onSelect(scenario)}
-      className="w-full rounded-xl border p-4 text-center cursor-pointer transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+      className="w-full min-w-0 rounded-xl border p-4 text-center cursor-pointer transition-all duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
       style={{
         background:       isSelected ? `linear-gradient(135deg, ${color}22, ${color}10)` : featured ? `linear-gradient(135deg, ${color}18, ${color}08)` : 'rgba(255,255,255,0.04)',
         borderColor:      isSelected ? `${color}66` : featured ? `${color}44` : 'rgba(255,255,255,0.08)',
@@ -619,7 +631,7 @@ function FinalCard({
     >
       <p className="font-display text-sm font-bold mb-0.5" style={{ color }}>{label}</p>
       <p className="font-mono text-[10px] mb-3" style={{ color: `${color}88` }}>{rate}</p>
-      <p className="font-mono text-xl font-bold leading-none mb-1" style={{ color }}>
+      <p className={`font-mono font-bold leading-none mb-1 ${valueFontSize(fmt(portfolioValue), 'overlay')}`} style={{ color }}>
         {fmt(portfolioValue)}
       </p>
       {btcPrice != null && (
@@ -646,7 +658,7 @@ function ScenarioCard({
       type="button"
       aria-pressed={isSelected}
       onClick={() => onSelect(scenario)}
-      className="relative w-full rounded-2xl border p-6 text-center cursor-pointer transition-all duration-200 select-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+      className="relative w-full min-w-0 rounded-2xl border p-6 text-center cursor-pointer transition-all duration-200 select-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
       style={{
         background:   isSelected ? `linear-gradient(135deg, ${color}22, ${color}0C)` : featured ? `linear-gradient(135deg, ${color}18, ${color}08)` : 'rgba(255,255,255,0.03)',
         borderColor:  isSelected ? `${color}66` : featured ? `${color}44` : 'rgba(255,255,255,0.07)',
@@ -666,7 +678,7 @@ function ScenarioCard({
       <p className="font-mono text-xs mb-4" style={{ color: `${color}88` }}>{rate}</p>
 
       {/* Portfolio value */}
-      <p className="font-mono text-3xl font-bold mb-1" style={{ color }}>
+      <p className={`font-mono font-bold mb-1 ${valueFontSize(fmt(portfolioValue), 'card')}`} style={{ color }}>
         {fmt(portfolioValue)}
       </p>
       <p className="text-[10px] font-mono mb-4" style={{ color: isSelected ? `${color}88` : C_TICK }}>

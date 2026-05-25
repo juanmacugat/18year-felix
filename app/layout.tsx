@@ -10,8 +10,8 @@ const mono     = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono', w
 const fredoka  = Fredoka({ subsets: ['latin'], variable: '--font-fredoka', weight: ['400', '500', '600', '700'] });
 
 export const metadata: Metadata = {
-  title: 'Felixfolio — For Felix',
-  description: "18 years of Bitcoin DCA — a gift for Felix, unlocking June 17, 2044",
+  title: 'Félixfolio — For Félix',
+  description: "18 years of Bitcoin DCA — a gift for Félix, unlocking June 17, 2044",
 };
 
 const VALID_LANGS: Lang[] = ['en', 'es', 'fr', 'de'];

@@ -9,15 +9,15 @@ interface BabyProps {
 }
 
 const STAGES = [
-  { maxAge: 0.5,      src: '/milestones/newborn-onesie-excited.webp',    alt: 'Felix as a newborn, excited and floating',               anim: 'baby-bounce',  dur: '1.8s' },
-  { maxAge: 2,        src: '/milestones/sitting-suit-curious.webp',       alt: 'Felix as a baby, sitting in a suit with curious eyes',   anim: 'baby-bounce',  dur: '1.8s' },
-  { maxAge: 5,        src: '/milestones/sitting-pointing-down.webp',      alt: 'Felix as a toddler, sitting and pointing down sternly',  anim: 'baby-crawl',   dur: '2.4s' },
-  { maxAge: 10,       src: '/milestones/briefcase-coffee-walk.webp',      alt: 'Felix as a child, walking fast with briefcase and coffee', anim: 'baby-float', dur: '3.5s' },
-  { maxAge: 13,       src: '/milestones/on-the-phone.webp',               alt: 'Felix as a preteen, on a brick phone and pointing',      anim: 'baby-float',   dur: '3.5s' },
-  { maxAge: 16,       src: '/milestones/scheming-steepled.webp',          alt: 'Felix as a teenager, fingertips pressed together scheming', anim: 'baby-breathe', dur: '4s' },
-  { maxAge: 17.5,     src: '/milestones/pacifier-arms-front.webp',        alt: 'Felix nearly 18, standing with pacifier and arms crossed', anim: 'baby-breathe', dur: '4s' },
-  { maxAge: 18,       src: '/milestones/standing-pointing-forward.webp',  alt: 'Felix at 18, standing and pointing forward assertively', anim: 'baby-breathe', dur: '4s'   },
-  { maxAge: Infinity, src: '/milestones/conductor-baton.webp',            alt: "Felix at 18, holding a conductor's baton, in command",  anim: 'baby-breathe', dur: '4s'   },
+  { maxAge: 0.5,      src: '/milestones/newborn-onesie-excited.webp',    alt: 'Félix as a newborn, excited and floating',               anim: 'baby-bounce',  dur: '1.8s' },
+  { maxAge: 2,        src: '/milestones/sitting-suit-curious.webp',       alt: 'Félix as a baby, sitting in a suit with curious eyes',   anim: 'baby-bounce',  dur: '1.8s' },
+  { maxAge: 5,        src: '/milestones/sitting-pointing-down.webp',      alt: 'Félix as a toddler, sitting and pointing down sternly',  anim: 'baby-crawl',   dur: '2.4s' },
+  { maxAge: 10,       src: '/milestones/briefcase-coffee-walk.webp',      alt: 'Félix as a child, walking fast with briefcase and coffee', anim: 'baby-float', dur: '3.5s' },
+  { maxAge: 13,       src: '/milestones/on-the-phone.webp',               alt: 'Félix as a preteen, on a brick phone and pointing',      anim: 'baby-float',   dur: '3.5s' },
+  { maxAge: 16,       src: '/milestones/scheming-steepled.webp',          alt: 'Félix as a teenager, fingertips pressed together scheming', anim: 'baby-breathe', dur: '4s' },
+  { maxAge: 17.5,     src: '/milestones/pacifier-arms-front.webp',        alt: 'Félix nearly 18, standing with pacifier and arms crossed', anim: 'baby-breathe', dur: '4s' },
+  { maxAge: 18,       src: '/milestones/standing-pointing-forward.webp',  alt: 'Félix at 18, standing and pointing forward assertively', anim: 'baby-breathe', dur: '4s'   },
+  { maxAge: Infinity, src: '/milestones/conductor-baton.webp',            alt: "Félix at 18, holding a conductor's baton, in command",  anim: 'baby-breathe', dur: '4s'   },
 ] as const;
 
 const FIRST_STAGE_SRC = STAGES[0].src;
