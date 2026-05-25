@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "WebFetch(domain:icon2.cleanpng.com)",
+      "Bash(npx tsc *)",
+      "Bash(sort -k6,7)",
+      "Bash(rm *.webp)",
+      "Bash(cp /Users/0xjmc/Downloads/92b43ca149379f70ce92d69b2f6676c0.png newborn-onesie-excited.png)",
+      "Bash(cp /Users/0xjmc/Downloads/a28d4246c8f4a8a16a173aa00e6cf763.png sitting-suit-curious.png)",
+      "Bash(cp /Users/0xjmc/Downloads/93caeaa94206bd01349c9efcde110f99.png sitting-pointing-down.png)",
+      "Bash(cp /Users/0xjmc/Downloads/4bebf31499ba77cf100ece7271a2d07e.png briefcase-coffee-walk.png)",
+      "Bash(node *)"
+    ]
+  }
+}

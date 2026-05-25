@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 228 24% 8%;
+    --foreground: 210 20% 96%;
+    --card: 229 23% 11%;
+    --card-foreground: 210 20% 96%;
+    --popover: 229 23% 11%;
+    --popover-foreground: 210 20% 96%;
+    --primary: 30 97% 54%;        /* #F7931A — Bitcoin orange */
+    --primary-foreground: 30 10% 8%;
+    --secondary: 230 16% 18%;
+    --secondary-foreground: 210 20% 96%;
+    --muted: 230 16% 18%;
+    --muted-foreground: 215 14% 50%;
+    --accent: 230 16% 18%;
+    --accent-foreground: 210 20% 96%;
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 210 20% 96%;
+    --border: 230 16% 16%;
+    --input: 230 16% 16%;
+    --ring: 142 76% 56%;
+    --radius: 0.75rem;
+
+    /* Layout */
+    --navbar-h: 68px;
+
+    /* Brand palette */
+    --btc: 30 97% 54%;           /* #F7931A — Bitcoin orange */
+    --btc-glow: 30 97% 54% / 0.2;
+    --gold: 51 100% 50%;         /* #FFD700 — gold */
+    --bear: 215 14% 44%;         /* #64748B — bear scenario */
+    --invested: 217 91% 60%;     /* #3B82F6 — invested line */
+    --hero-bg: 228 50% 7%;       /* #08091A */
+    --overlay-bg: 234 44% 8%;   /* #0C0D1F — dropdown / floating panel */
+  }
+
+  * { @apply border-border; }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* ── Keyframe animations ─────────────────────────────────────── */
+
+@keyframes baby-crawl {
+  0%, 100% { transform: rotate(-4deg) translateY(0px);  }
+  50%       { transform: rotate(4deg)  translateY(-6px); }
+}
+
+@keyframes baby-float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33%       { transform: translateY(-8px) rotate(1deg); }
+  66%       { transform: translateY(-4px) rotate(-1deg); }
+}
+
+@keyframes baby-bounce {
+  0%, 100% { transform: translateY(0px) scaleY(1);    }
+  50%       { transform: translateY(-10px) scaleY(1.02); }
+}
+
+@keyframes baby-breathe {
+  0%, 100% { transform: scale(1); }
+  50%       { transform: scale(1.03); }
+}
+
+@keyframes star-twinkle {
+  0%, 100% { opacity: 0.25; transform: scale(0.8); }
+  50%       { opacity: 1;    transform: scale(1.2); }
+}
+
+@keyframes orbit-glow {
+  0%   { opacity: 0.5; transform: scale(1) translate(0, 0); }
+  33%  { opacity: 0.8; transform: scale(1.05) translate(10px, -8px); }
+  66%  { opacity: 0.6; transform: scale(0.97) translate(-6px, 6px); }
+  100% { opacity: 0.5; transform: scale(1) translate(0, 0); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+
+@keyframes progress-fill {
+  from { width: 0%; }
+  to   { width: var(--target-width, 0%); }
+}
+
+@keyframes stage-enter {
+  from { opacity: 0; transform: translateY(14px) scale(0.92); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 0 0 hsl(var(--btc) / 0.6); }
+  50%       { box-shadow: 0 0 0 8px hsl(var(--btc) / 0); }
+}
+
+/* ── Utility classes ─────────────────────────────────────────── */
+
+.animate-baby-crawl   { animation: baby-crawl  2.4s ease-in-out infinite; }
+.animate-baby-float   { animation: baby-float  3.5s ease-in-out infinite; }
+.animate-baby-bounce  { animation: baby-bounce 1.8s ease-in-out infinite; }
+.animate-baby-breathe { animation: baby-breathe 4s ease-in-out infinite; }
+.animate-slide-up     { animation: slide-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-fade-in      { animation: fade-in 0.6s ease both; }
+
+.glow-btc {
+  box-shadow: 0 0 24px hsl(var(--btc) / 0.35), 0 0 48px hsl(var(--btc) / 0.15);
+}
+
+.glow-text-btc {
+  text-shadow: 0 0 30px hsl(var(--btc) / 0.6), 0 0 60px hsl(var(--btc) / 0.3);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-baby-crawl,
+  .animate-baby-float,
+  .animate-baby-bounce,
+  .animate-baby-breathe,
+  .animate-slide-up,
+  .animate-fade-in {
+    animation: none;
+  }
+}
