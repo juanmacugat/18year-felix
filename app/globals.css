@@ -73,12 +73,6 @@
   50%       { opacity: 1;    transform: scale(1.2); }
 }
 
-@keyframes orbit-glow {
-  0%   { opacity: 0.5; transform: scale(1) translate(0, 0); }
-  33%  { opacity: 0.8; transform: scale(1.05) translate(10px, -8px); }
-  66%  { opacity: 0.6; transform: scale(0.97) translate(-6px, 6px); }
-  100% { opacity: 0.5; transform: scale(1) translate(0, 0); }
-}
 
 @keyframes slide-up {
   from { opacity: 0; transform: translateY(28px); }
@@ -106,6 +100,13 @@
   50%       { box-shadow: 0 0 0 8px hsl(var(--btc) / 0); }
 }
 
+@keyframes scroll-nudge {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(5px); }
+}
+
+.animate-scroll-nudge { animation: scroll-nudge 2s ease-out infinite; }
+
 /* ── Utility classes ─────────────────────────────────────────── */
 
 .animate-baby-crawl   { animation: baby-crawl  2.4s ease-in-out infinite; }
@@ -124,12 +125,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-baby-crawl,
-  .animate-baby-float,
-  .animate-baby-bounce,
-  .animate-baby-breathe,
-  .animate-slide-up,
-  .animate-fade-in {
-    animation: none;
+  * {
+    animation: none !important;
   }
 }

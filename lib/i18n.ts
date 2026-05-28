@@ -2,6 +2,7 @@ export type Lang = 'en' | 'es' | 'fr' | 'de';
 
 export interface Translations {
   // ── Nav / Hero ─────────────────────────────────────────────────────────────
+  hero_title:           string;
   hero_badge:           string;
   hero_subtitle:        string;
   hero_unlocking:       string;
@@ -37,13 +38,9 @@ export interface Translations {
   final_title_post:     string;
   final_subtitle:       string;
   final_at18:           string;
-  final_disclaimer:     string;
-  // ── Chart section ──────────────────────────────────────────────────────────
-  chart_label:          string;
-  chart_title:          string;
-  chart_subtitle:       (value: string) => string;
-  chart_at18:           string;
-  chart_disclaimer:     string;
+  // ── Closing letter ─────────────────────────────────────────────────────────
+  closing_body:         string;
+  closing_from:         string;
   // ── Scenario cards ─────────────────────────────────────────────────────────
   scenario_base_badge:  string;
   scenario_btc_label:   string;
@@ -65,6 +62,7 @@ export interface Translations {
 // ── English ───────────────────────────────────────────────────────────────────
 
 const en: Translations = {
+  hero_title:           'For Félix',
   hero_badge:           'Born Into Bitcoin',
   hero_subtitle:        '18 years of Bitcoin DCA',
   hero_unlocking:       'Unlocking',
@@ -100,13 +98,8 @@ const en: Translations = {
   final_title_post:     '',
   final_subtitle:       'The gift unlocks.',
   final_at18:           'At 18, Félix could have',
-  final_disclaimer:     '€20/week DCA',
-
-  chart_label:          'Projection',
-  chart_title:          'Bitcoin DCA Growth',
-  chart_subtitle:       (value) => `€20/week · three scenarios · starting ${value} today`,
-  chart_at18:           'At 18, Félix could have',
-  chart_disclaimer:     '€20/week DCA · BTC price projections use the same historical growth rate',
+  closing_body:         'Since the week you were born, your uncle Juan Ma saved for you. Every week. This page has been counting from day one. The rest is yours.',
+  closing_from:         '— Juan Ma, May 2026',
 
   scenario_base_badge:  'Base Case',
   scenario_btc_label:   'BTC price in 2044',
@@ -129,6 +122,7 @@ const en: Translations = {
 // ── Spanish ───────────────────────────────────────────────────────────────────
 
 const es: Translations = {
+  hero_title:           'Para Félix',
   hero_badge:           'Nacido con Bitcoin',
   hero_subtitle:        '18 años de DCA en Bitcoin',
   hero_unlocking:       'Se desbloquea el',
@@ -164,13 +158,8 @@ const es: Translations = {
   final_title_post:     '',
   final_subtitle:       'El regalo se desbloquea.',
   final_at18:           'A los 18, Félix podría tener',
-  final_disclaimer:     '€20/semana DCA',
-
-  chart_label:          'Proyección',
-  chart_title:          'Crecimiento del DCA en Bitcoin',
-  chart_subtitle:       (value) => `€20/semana · tres escenarios · partiendo de ${value} hoy`,
-  chart_at18:           'A los 18, Félix podría tener',
-  chart_disclaimer:     '€20/semana DCA · Las proyecciones del precio de BTC usan la misma tasa de crecimiento histórica',
+  closing_body:         'Desde la semana en que naciste, tu tío Juan Ma ahorró para ti. Cada semana. Esta página lo ha registrado desde el primer día. Lo que queda es tuyo.',
+  closing_from:         '— Juan Ma, mayo de 2026',
 
   scenario_base_badge:  'Caso base',
   scenario_btc_label:   'Precio BTC en 2044',
@@ -193,6 +182,7 @@ const es: Translations = {
 // ── French ────────────────────────────────────────────────────────────────────
 
 const fr: Translations = {
+  hero_title:           'Pour Félix',
   hero_badge:           'Né dans le Bitcoin',
   hero_subtitle:        '18 ans de DCA Bitcoin',
   hero_unlocking:       'Déblocage le',
@@ -228,13 +218,8 @@ const fr: Translations = {
   final_title_post:     ' ans',
   final_subtitle:       'Le cadeau se débloque.',
   final_at18:           'À 18 ans, Félix pourrait avoir',
-  final_disclaimer:     '€20/semaine DCA',
-
-  chart_label:          'Projection',
-  chart_title:          'Croissance du DCA Bitcoin',
-  chart_subtitle:       (value) => `€20/semaine · trois scénarios · à partir de ${value} aujourd'hui`,
-  chart_at18:           'À 18 ans, Félix pourrait avoir',
-  chart_disclaimer:     "€20/semaine DCA · Les projections du prix BTC utilisent le même taux de croissance historique",
+  closing_body:         "Depuis la semaine de ta naissance, ton oncle Juan Ma a mis de côté pour toi. Chaque semaine. Cette page comptait depuis le premier jour. Le reste t'appartient.",
+  closing_from:         '— Juan Ma, mai 2026',
 
   scenario_base_badge:  'Cas de base',
   scenario_btc_label:   'Prix BTC en 2044',
@@ -257,6 +242,7 @@ const fr: Translations = {
 // ── German ────────────────────────────────────────────────────────────────────
 
 const de: Translations = {
+  hero_title:           'Für Félix',
   hero_badge:           'In Bitcoin hineingeboren',
   hero_subtitle:        '18 Jahre Bitcoin-DCA',
   hero_unlocking:       'Freischaltung am',
@@ -292,13 +278,8 @@ const de: Translations = {
   final_title_post:     '',
   final_subtitle:       'Das Geschenk wird freigeschaltet.',
   final_at18:           'Mit 18 könnte Félix haben',
-  final_disclaimer:     '€20/Woche DCA',
-
-  chart_label:          'Projektion',
-  chart_title:          'Bitcoin-DCA-Wachstum',
-  chart_subtitle:       (value) => `€20/Woche · drei Szenarien · ausgehend von ${value} heute`,
-  chart_at18:           'Mit 18 könnte Félix haben',
-  chart_disclaimer:     '€20/Woche DCA · BTC-Preisprojektionen verwenden die gleiche historische Wachstumsrate',
+  closing_body:         'Seit der Woche, in der du geboren wurdest, hat dein Onkel Juan Ma für dich gespart. Jede Woche. Diese Seite hat es vom ersten Tag an gezählt. Was nun kommt, gehört dir.',
+  closing_from:         '— Juan Ma, Mai 2026',
 
   scenario_base_badge:  'Basisszenario',
   scenario_btc_label:   'BTC-Preis 2044',

@@ -20,26 +20,14 @@ const TOTAL_YEARS = 18;
 
 // Pre-computed star positions (deterministic — avoids SSR/hydration mismatch)
 const STARS = [
-  { top: '8%',  left: '5%',  size: 2,   delay: 0,    dur: 3.2 },
-  { top: '15%', left: '18%', size: 1.5, delay: 0.8,  dur: 2.8 },
-  { top: '6%',  left: '35%', size: 2.5, delay: 1.6,  dur: 4.1 },
-  { top: '22%', left: '52%', size: 1,   delay: 0.3,  dur: 2.5 },
-  { top: '4%',  left: '72%', size: 2,   delay: 2.1,  dur: 3.6 },
-  { top: '18%', left: '85%', size: 1.5, delay: 1.0,  dur: 2.9 },
-  { top: '35%', left: '3%',  size: 1,   delay: 1.8,  dur: 3.8 },
-  { top: '42%', left: '92%', size: 2,   delay: 0.5,  dur: 4.4 },
-  { top: '55%', left: '8%',  size: 1.5, delay: 2.6,  dur: 2.7 },
-  { top: '62%', left: '95%', size: 1,   delay: 1.3,  dur: 3.1 },
-  { top: '78%', left: '12%', size: 2,   delay: 0.7,  dur: 2.6 },
-  { top: '85%', left: '88%', size: 1.5, delay: 2.0,  dur: 3.9 },
-  { top: '72%', left: '45%', size: 1,   delay: 3.2,  dur: 2.4 },
-  { top: '30%', left: '25%', size: 1.5, delay: 0.4,  dur: 4.8 },
-  { top: '48%', left: '68%', size: 2,   delay: 1.9,  dur: 3.3 },
-  { top: '12%', left: '60%', size: 1,   delay: 2.8,  dur: 2.2 },
-  { top: '90%', left: '55%', size: 2,   delay: 1.5,  dur: 3.7 },
-  { top: '68%', left: '30%', size: 1.5, delay: 0.9,  dur: 4.2 },
-  { top: '25%', left: '78%', size: 1,   delay: 3.5,  dur: 2.8 },
-  { top: '82%', left: '20%', size: 2,   delay: 2.4,  dur: 3.0 },
+  { top: '6%',  left: '8%',  size: 1.5, delay: 0,    dur: 5.8 },
+  { top: '12%', left: '62%', size: 1,   delay: 1.4,  dur: 6.5 },
+  { top: '28%', left: '90%', size: 2,   delay: 0.7,  dur: 5.2 },
+  { top: '55%', left: '4%',  size: 1,   delay: 2.1,  dur: 7.0 },
+  { top: '38%', left: '44%', size: 1.5, delay: 3.3,  dur: 6.1 },
+  { top: '72%', left: '78%', size: 1,   delay: 1.8,  dur: 5.6 },
+  { top: '82%', left: '28%', size: 2,   delay: 0.4,  dur: 6.8 },
+  { top: '18%', left: '30%', size: 1,   delay: 2.9,  dur: 5.4 },
 ] as const;
 
 function formatBtc(btc: number | null): string {
@@ -92,13 +80,10 @@ export default function LandingHero({ totalEurValue, totalInvested, btcBalance }
             }}
           />
         ))}
-        {/* BTC ambient glow */}
+        {/* BTC ambient glow — static, off-centre */}
         <div
-          className="absolute top-[-20%] left-[40%] w-[600px] h-[600px] rounded-full blur-3xl opacity-[0.07]"
-          style={{
-            background: 'radial-gradient(circle, #F7931A, transparent 70%)',
-            animation: 'orbit-glow 12s ease-in-out infinite',
-          }}
+          className="absolute top-[-20%] left-[35%] w-[640px] h-[640px] rounded-full blur-3xl opacity-[0.06]"
+          style={{ background: 'radial-gradient(circle, #F7931A, transparent 65%)' }}
         />
       </div>
 
@@ -116,7 +101,7 @@ export default function LandingHero({ totalEurValue, totalInvested, btcBalance }
 
             {/* Title */}
             <h1 className="font-display text-7xl lg:text-8xl font-bold leading-none mb-4">
-              <span style={{ color: C_BTC }}>For Félix</span>
+              <span style={{ color: C_BTC }}>{t.hero_title}</span>
             </h1>
             <p className="text-slate-400 text-lg lg:text-xl mb-2">
               {t.hero_subtitle}
@@ -205,16 +190,8 @@ export default function LandingHero({ totalEurValue, totalInvested, btcBalance }
           </div>
 
           {/* Right: baby character */}
-          <div className="flex items-center justify-center lg:justify-end">
+          <div className="hidden lg:flex items-center justify-center lg:justify-end">
             <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-[26rem] lg:h-[26rem]">
-              {/* Glowing ring behind baby */}
-              <div
-                className="absolute inset-[-12%] rounded-full"
-                style={{
-                  background: 'radial-gradient(circle, hsl(30 97% 54% / 0.12) 0%, transparent 70%)',
-                  animation: 'orbit-glow 8s ease-in-out infinite',
-                }}
-              />
               <BabyCharacter age={journeyAge} className="relative z-10 w-full h-full" />
 
               {/* Floating badge: current journey year */}
@@ -248,7 +225,7 @@ export default function LandingHero({ totalEurValue, totalInvested, btcBalance }
           aria-label="Scroll to journey"
           className="group w-10 h-10 rounded-full border border-white/10 bg-white/5 flex items-center justify-center hover:bg-white/10 hover:border-[#F7931A]/40 transition-all duration-300 cursor-pointer"
         >
-          <ChevronDown className="h-5 w-5 text-slate-500 group-hover:text-[#F7931A] transition-colors animate-bounce" />
+          <ChevronDown className="h-5 w-5 text-slate-500 group-hover:text-[#F7931A] transition-colors animate-scroll-nudge" />
         </button>
       </div>
     </section>

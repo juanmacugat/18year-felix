@@ -47,7 +47,6 @@ export default async function Page() {
       {/* ── 18-year projection timeline ── */}
       <ProjectionTimeline
         totalEurValue={totalEurValue ?? 0}
-        totalInvested={totalInvested}
         btcPriceEur={btcPriceEur}
       />
 

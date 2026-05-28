@@ -1,40 +1,22 @@
 'use client';
 
 import { useEffect, useRef, useState, useMemo } from 'react';
-import {
-  Chart as ChartJS,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Filler,
-  Tooltip,
-  Legend,
-  type ChartOptions,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
 import BabyCharacter from './BabyCharacter';
 import { useCurrency } from '@/app/context/currency';
 import { useLanguage } from '@/app/context/language';
-import { C_BTC, C_GOLD, C_BEAR, C_INVESTED, C_SURFACE, C_TICK, SCENARIO_COLORS } from '@/lib/colors';
+import { C_BTC, C_GOLD, C_BEAR, SCENARIO_COLORS } from '@/lib/colors';
 
 type Scenario = 'bear' | 'base' | 'bull';
 
 const MILESTONE_AGES = [0, 0.5, 2, 5, 10, 13, 16, 17.5];
 
-ChartJS.register(LinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
-
 // ── Constants ─────────────────────────────────────────────────────────────────
 const GIFT_START  = new Date('2026-05-12');
 const UNLOCK_DATE = new Date('2044-06-17');
-const TOTAL_MS    = UNLOCK_DATE.getTime() - GIFT_START.getTime();
 const WEEKLY_DCA  = 20;
-const MONTHLY_DCA = WEEKLY_DCA * (365.25 / 7 / 12); // ≈ €108.71
+const MONTHLY_DCA = WEEKLY_DCA * (365.25 / 7 / 12);
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
-function toDecimalYear(d: Date): number {
-  return d.getFullYear() + d.getMonth() / 12 + d.getDate() / 365;
-}
-
 function projectAtMonths(start: number, dca: number, months: number, rate: number): number {
   if (months <= 0) return start;
   const mr = Math.pow(1 + rate, 1 / 12) - 1;
@@ -44,66 +26,15 @@ function projectAtMonths(start: number, dca: number, months: number, rate: numbe
   );
 }
 
-function buildScenario(start: number, dca: number, rate: number): { x: number; y: number }[] {
-  const mr     = Math.pow(1 + rate, 1 / 12) - 1;
-  const cursor = new Date();
-  cursor.setDate(1);
-  const pts: { x: number; y: number }[] = [];
-  let value = start;
-  while (cursor <= UNLOCK_DATE) {
-    pts.push({ x: toDecimalYear(cursor), y: Math.round(value) });
-    value = value * (1 + mr) + dca;
-    cursor.setMonth(cursor.getMonth() + 1);
-  }
-  return pts;
-}
-
-function buildInvested(total: number): { x: number; y: number }[] {
-  const pts: { x: number; y: number }[] = [];
-  const cursor = new Date(GIFT_START);
-  const today  = new Date();
-  let invested = 0;
-  while (cursor <= today) {
-    pts.push({ x: toDecimalYear(cursor), y: Math.round(invested) });
-    invested += MONTHLY_DCA;
-    cursor.setMonth(cursor.getMonth() + 1);
-  }
-  if (pts.length) pts[pts.length - 1].y = Math.round(total);
-  return pts;
-}
-
-// Custom Chart.js plugin — "Today" vertical line
-const todayLinePlugin = {
-  id: 'todayLine',
-  afterDatasetsDraw(chart: ChartJS) {
-    const { ctx, scales } = chart;
-    const x = scales['x'].getPixelForValue(toDecimalYear(new Date()));
-    ctx.save();
-    ctx.strokeStyle = 'rgba(255,255,255,0.2)';
-    ctx.lineWidth   = 1.5;
-    ctx.setLineDash([5, 6]);
-    ctx.beginPath();
-    ctx.moveTo(x, scales['y'].top);
-    ctx.lineTo(x, scales['y'].bottom);
-    ctx.stroke();
-    ctx.fillStyle = 'rgba(255,255,255,0.35)';
-    ctx.font      = '11px monospace';
-    ctx.textAlign = 'center';
-    ctx.fillText('Today', x, scales['y'].top - 8);
-    ctx.restore();
-  },
-};
-
 // ── Props ─────────────────────────────────────────────────────────────────────
 interface Props {
   totalEurValue: number;
-  totalInvested: number | null;
   btcPriceEur:  number | null;
 }
 
 // ── Main component ────────────────────────────────────────────────────────────
-export default function ProjectionTimeline({ totalEurValue, totalInvested, btcPriceEur }: Props) {
-  const { fmt, convert, symbol } = useCurrency();
+export default function ProjectionTimeline({ totalEurValue, btcPriceEur }: Props) {
+  const { fmt } = useCurrency();
   const { t } = useLanguage();
   const containerRef  = useRef<HTMLDivElement>(null);
   const rafRef        = useRef<number>(0);
@@ -181,109 +112,6 @@ export default function ProjectionTimeline({ totalEurValue, totalInvested, btcPr
   const showFinal    = progress > 0.91;
   const finalOpacity = Math.min(1, Math.max(0, (progress - 0.92) / 0.05)); // beat 1: title + baby
   const cardsOpacity = Math.min(1, Math.max(0, (progress - 0.96) / 0.04)); // beat 2: scenario cards
-
-  // Raw data — only recomputes when portfolio value or invested amount changes
-  const rawData = useMemo(() => ({
-    bull:     buildScenario(totalEurValue, MONTHLY_DCA, 0.60),
-    base:     buildScenario(totalEurValue, MONTHLY_DCA, 0.35),
-    bear:     buildScenario(totalEurValue, MONTHLY_DCA, 0.15),
-    invested: buildInvested(totalInvested ?? 0),
-  }), [totalEurValue, totalInvested]);
-
-  // Chart datasets — only recomputes line styles when selected scenario changes
-  const datasets = useMemo(() => {
-    function lineStyle(scenario: Scenario, baseColor: string, baseWidth: number) {
-      if (!selectedScenario) return { borderColor: baseColor, borderWidth: baseWidth };
-      if (selectedScenario === scenario) return { borderColor: baseColor, borderWidth: baseWidth + 1.5 };
-      return { borderColor: `${baseColor}28`, borderWidth: baseWidth * 0.5 };
-    }
-    const bull = lineStyle('bull', C_GOLD,     1.5);
-    const base = lineStyle('base', C_BTC,      2.5);
-    const bear = lineStyle('bear', C_BEAR,     1.5);
-    return [
-      {
-        label: '▲ Bull (60%)',
-        data:  rawData.bull,
-        ...bull,
-        borderDash: [6, 3], pointRadius: 0, tension: 0.4, fill: false, backgroundColor: 'transparent',
-      },
-      {
-        label: '◆ Base (35%)',
-        data:  rawData.base,
-        ...base,
-        borderDash: [], pointRadius: 0, tension: 0.4, fill: 'origin',
-        backgroundColor: selectedScenario && selectedScenario !== 'base' ? 'transparent' : `${C_BTC}12`,
-      },
-      {
-        label: '▼ Bear (15%)',
-        data:  rawData.bear,
-        ...bear,
-        borderDash: [5, 4], pointRadius: 0, tension: 0.4, fill: false, backgroundColor: 'transparent',
-      },
-      {
-        label: '— Invested',
-        data:  rawData.invested,
-        borderColor: C_INVESTED, borderWidth: 1.5,
-        borderDash: [3, 4], pointRadius: 0, tension: 0.1, fill: false, backgroundColor: 'transparent',
-      },
-    ];
-  }, [rawData, selectedScenario]);
-
-  const chartOptions = useMemo<ChartOptions<'line'>>(() => ({
-    responsive: true,
-    maintainAspectRatio: false,
-    interaction: { mode: 'index', intersect: false },
-    animation: { duration: 900, easing: 'easeOutQuart' },
-    plugins: {
-      legend: {
-        labels: {
-          color: C_BEAR, usePointStyle: true, pointStyleWidth: 10, padding: 20,
-          font: { size: 11, family: 'var(--font-mono)' },
-        },
-      },
-      tooltip: {
-        backgroundColor: C_SURFACE, borderColor: 'rgba(255,255,255,0.1)', borderWidth: 1,
-        titleColor: C_BEAR, bodyColor: '#F1F5F9', padding: 12,
-        bodyFont: { family: 'var(--font-mono)', size: 12 },
-        callbacks: {
-          title: (items) => {
-            const yr = items[0]?.parsed.x;
-            if (yr == null) return '';
-            const y = Math.floor(yr); const m = Math.round((yr - y) * 12);
-            return new Date(y, m, 1).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-          },
-          label: (ctx) => ` ${ctx.dataset.label}: ${fmt(ctx.parsed.y ?? 0)}`,
-        },
-      },
-    },
-    scales: {
-      x: {
-        type: 'linear',
-        min: toDecimalYear(GIFT_START),
-        max: toDecimalYear(UNLOCK_DATE) + 0.1,
-        ticks: {
-          stepSize: 2, color: C_TICK, maxRotation: 0, font: { size: 11 },
-          callback: (v) => Number.isInteger(Number(v)) && Number(v) % 2 === 0 ? String(v) : '',
-        },
-        grid: { color: 'rgba(255,255,255,0.04)' },
-        border: { color: 'transparent' },
-      },
-      y: {
-        beginAtZero: true,
-        ticks: {
-          color: C_TICK, font: { family: 'var(--font-mono)', size: 11 }, maxTicksLimit: 7,
-          callback: (v) => {
-            const c = convert(Number(v));
-            if (c >= 1_000_000) return `${symbol}${(c / 1_000_000).toFixed(1)}M`;
-            if (c >= 1_000)     return `${symbol}${(c / 1_000).toFixed(0)}K`;
-            return `${symbol}${c.toFixed(0)}`;
-          },
-        },
-        grid: { color: 'rgba(255,255,255,0.04)' },
-        border: { color: 'transparent' },
-      },
-    },
-  }), [fmt, convert, symbol]);
 
   return (
     <>
@@ -490,9 +318,6 @@ export default function ProjectionTimeline({ totalEurValue, totalInvested, btcPr
                   );
                 })()}
 
-                <p className="text-[10px] text-slate-700 font-mono mt-3 text-center">
-                  {t.final_disclaimer}
-                </p>
               </div>
             </div>
           )}
@@ -500,92 +325,26 @@ export default function ProjectionTimeline({ totalEurValue, totalInvested, btcPr
       </div>
 
       {/* ═══════════════════════════════════════════════════════════════════════
-          PART 2 — Static projection chart + scenario detail
+          PART 2 — Closing letter
       ════════════════════════════════════════════════════════════════════════ */}
       <section
-        className="py-20 px-6 lg:px-12"
-        style={{ background: 'linear-gradient(180deg, #08091A 0%, #0A0B1E 50%, #08091A 100%)' }}
+        className="py-32 px-6"
+        style={{ background: '#08091A' }}
       >
-        <div className="max-w-7xl mx-auto">
-
-          <div className="mb-10 text-center">
-            <p className="text-xs text-[#F7931A]/70 uppercase tracking-widest mb-2 font-mono">{t.chart_label}</p>
-            <h2 className="font-display text-4xl font-bold text-white mb-2">
-              {t.chart_title}
-            </h2>
-            <p className="text-slate-500 text-sm">
-              {t.chart_subtitle(fmt(totalEurValue))}
-            </p>
+        <div className="max-w-sm mx-auto text-center">
+          <div className="flex justify-center mb-10">
+            <div
+              className="w-px h-14"
+              style={{ background: 'linear-gradient(to bottom, transparent, rgba(247,147,26,0.25))' }}
+            />
           </div>
 
-          {/* Chart */}
-          <div
-            className="rounded-2xl border p-6 mb-10"
-            style={{ background: 'rgba(255,255,255,0.025)', borderColor: 'rgba(255,255,255,0.07)' }}
-          >
-            <div className="h-72 lg:h-96">
-              <Line data={{ datasets }} options={chartOptions} plugins={[todayLinePlugin]}/>
-            </div>
-          </div>
-
-          {/* Scenario cards with BTC price */}
-          <p className="text-xs text-slate-500 uppercase tracking-widest text-center mb-6 font-mono">
-            {t.chart_at18}
+          <p className="text-slate-300 text-xl leading-relaxed">
+            {t.closing_body}
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
-            <ScenarioCard
-              label={t.bear_label} rate="15% avg/yr"
-              portfolioValue={finalBear} btcPrice={btcBear}
-              color={C_BEAR} scenario="bear"
-              isSelected={selectedScenario === 'bear'}
-              onSelect={toggleScenario}
-              fmt={fmt}
-            />
-            <ScenarioCard
-              label={t.base_label} rate="35% avg/yr"
-              portfolioValue={finalBase} btcPrice={btcBase}
-              color={C_BTC} featured scenario="base"
-              isSelected={selectedScenario === 'base'}
-              onSelect={toggleScenario}
-              fmt={fmt}
-            />
-            <ScenarioCard
-              label={t.bull_label} rate="60% avg/yr"
-              portfolioValue={finalBull} btcPrice={btcBull}
-              color={C_GOLD} scenario="bull"
-              isSelected={selectedScenario === 'bull'}
-              onSelect={toggleScenario}
-              fmt={fmt}
-            />
-          </div>
 
-          {/* Scenario explanation panel */}
-          {selectedScenario && (() => {
-            const color = SCENARIO_COLORS[selectedScenario];
-            return (
-              <div
-                className="rounded-2xl border px-6 py-5 mb-4 transition-all duration-300"
-                style={{
-                  background:   `linear-gradient(135deg, ${color}10, ${color}06)`,
-                  borderColor:  `${color}33`,
-                  boxShadow:    `0 0 32px ${color}14`,
-                }}
-              >
-                <p
-                  className="font-display font-bold text-sm mb-2"
-                  style={{ color }}
-                >
-                  {t[`${selectedScenario}_headline`]}
-                </p>
-                <p className="text-slate-400 text-sm leading-relaxed">
-                  {t[`${selectedScenario}_body`]}
-                </p>
-              </div>
-            );
-          })()}
-
-          <p className="text-center text-[11px] text-slate-600 font-mono">
-            {t.chart_disclaimer}
+          <p className="font-mono text-sm text-slate-500 mt-8">
+            {t.closing_from}
           </p>
         </div>
       </section>
@@ -595,16 +354,11 @@ export default function ProjectionTimeline({ totalEurValue, totalInvested, btcPr
 
 // ── Sub-components ────────────────────────────────────────────────────────────
 
-function valueFontSize(value: string, variant: 'card' | 'overlay'): string {
+function valueFontSize(value: string): string {
   const len = value.length;
-  if (variant === 'overlay') {
-    if (len <= 10) return 'text-lg';
-    if (len <= 14) return 'text-base';
-    return 'text-sm';
-  }
-  if (len <= 10) return 'text-2xl';
-  if (len <= 14) return 'text-xl';
-  return 'text-lg';
+  if (len <= 10) return 'text-lg';
+  if (len <= 14) return 'text-base';
+  return 'text-sm';
 }
 
 function FinalCard({
@@ -631,73 +385,13 @@ function FinalCard({
     >
       <p className="font-display text-sm font-bold mb-0.5" style={{ color }}>{label}</p>
       <p className="font-mono text-[10px] mb-3" style={{ color: `${color}88` }}>{rate}</p>
-      <p className={`font-mono font-bold leading-none mb-1 ${valueFontSize(fmt(portfolioValue), 'overlay')}`} style={{ color }}>
+      <p className={`font-mono font-bold leading-none mb-1 ${valueFontSize(fmt(portfolioValue))}`} style={{ color }}>
         {fmt(portfolioValue)}
       </p>
       {btcPrice != null && (
         <p className="text-[10px] font-mono mt-2" style={{ color: `${color}70` }}>
           BTC ≈ {fmt(btcPrice)}
         </p>
-      )}
-    </button>
-  );
-}
-
-function ScenarioCard({
-  label, rate, portfolioValue, btcPrice, color, featured, scenario, isSelected, onSelect, fmt,
-}: {
-  label: string; rate: string;
-  portfolioValue: number; btcPrice: number | null;
-  color: string; featured?: boolean;
-  scenario: Scenario; isSelected: boolean; onSelect: (s: Scenario) => void;
-  fmt: (v: number | null) => string;
-}) {
-  const { t } = useLanguage();
-  return (
-    <button
-      type="button"
-      aria-pressed={isSelected}
-      onClick={() => onSelect(scenario)}
-      className="relative w-full min-w-0 rounded-2xl border p-6 text-center cursor-pointer transition-all duration-200 select-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-      style={{
-        background:   isSelected ? `linear-gradient(135deg, ${color}22, ${color}0C)` : featured ? `linear-gradient(135deg, ${color}18, ${color}08)` : 'rgba(255,255,255,0.03)',
-        borderColor:  isSelected ? `${color}66` : featured ? `${color}44` : 'rgba(255,255,255,0.07)',
-        boxShadow:    isSelected ? `0 0 36px ${color}44` : featured ? `0 0 30px ${color}22` : 'none',
-        outlineColor: color,
-      }}
-    >
-      {featured && (
-        <div
-          className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-xs font-mono font-bold"
-          style={{ background: color, color: '#000' }}
-        >
-          {t.scenario_base_badge}
-        </div>
-      )}
-      <p className="font-display text-lg font-bold mb-1" style={{ color }}>{label}</p>
-      <p className="font-mono text-xs mb-4" style={{ color: `${color}88` }}>{rate}</p>
-
-      {/* Portfolio value */}
-      <p className={`font-mono font-bold mb-1 ${valueFontSize(fmt(portfolioValue), 'card')}`} style={{ color }}>
-        {fmt(portfolioValue)}
-      </p>
-      <p className="text-[10px] font-mono mb-4" style={{ color: isSelected ? `${color}88` : C_TICK }}>
-        {isSelected ? t.scenario_tap_dismiss : t.scenario_tap_hint}
-      </p>
-
-      {/* BTC price prediction */}
-      {btcPrice != null && (
-        <div
-          className="rounded-lg px-3 py-2 border"
-          style={{ background: `${color}0C`, borderColor: `${color}22` }}
-        >
-          <p className="text-[10px] text-slate-500 uppercase tracking-widest font-mono mb-1">
-            {t.scenario_btc_label}
-          </p>
-          <p className="font-mono font-bold text-lg" style={{ color }}>
-            {fmt(btcPrice)}
-          </p>
-        </div>
       )}
     </button>
   );
