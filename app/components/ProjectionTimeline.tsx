@@ -27,7 +27,7 @@ ChartJS.register(LinearScale, PointElement, LineElement, Filler, Tooltip, Legend
 const GIFT_START  = new Date('2026-05-12');
 const UNLOCK_DATE = new Date('2044-06-17');
 const TOTAL_MS    = UNLOCK_DATE.getTime() - GIFT_START.getTime();
-const WEEKLY_DCA  = 25;
+const WEEKLY_DCA  = 20;
 const MONTHLY_DCA = WEEKLY_DCA * (365.25 / 7 / 12); // ≈ €108.71
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
