@@ -40,6 +40,42 @@ export default function ProjectionTimeline({ totalEurValue, btcPriceEur }: Props
   const rafRef        = useRef<number>(0);
   const [progress, setProgress] = useState(0);
   const [selectedScenario, setSelectedScenario] = useState<Scenario | null>(null);
+  const [countdown, setCountdown] = useState<{ yrs: number; mos: number; days: number } | null>(null);
+  const letterRef = useRef<HTMLDivElement>(null);
+  const [letterVisible, setLetterVisible] = useState(false);
+
+  // Reveal the closing letter once it scrolls into view
+  useEffect(() => {
+    const el = letterRef.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setLetterVisible(true);
+          obs.disconnect();
+        }
+      },
+      { threshold: 0.25 },
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  // Live unlock countdown — ticks each minute; days only flip at midnight anyway
+  useEffect(() => {
+    const tick = () => {
+      const diffMs   = UNLOCK_DATE.getTime() - Date.now();
+      const diffDays = Math.max(0, Math.floor(diffMs / (1000 * 60 * 60 * 24)));
+      setCountdown({
+        yrs:  Math.floor(diffDays / 365),
+        mos:  Math.floor((diffDays % 365) / 30),
+        days: diffDays % 30,
+      });
+    };
+    tick();
+    const id = setInterval(tick, 60_000);
+    return () => clearInterval(id);
+  }, []);
 
   function toggleScenario(s: Scenario) {
     setSelectedScenario(prev => prev === s ? null : s);
@@ -331,21 +367,50 @@ export default function ProjectionTimeline({ totalEurValue, btcPriceEur }: Props
         className="py-32 px-6"
         style={{ background: '#08091A' }}
       >
-        <div className="max-w-sm mx-auto text-center">
-          <div className="flex justify-center mb-10">
+        <div ref={letterRef} className="max-w-sm mx-auto text-center">
+          <div
+            className={`flex justify-center mb-10 transition-opacity duration-[1200ms] ease-out motion-reduce:transition-none motion-reduce:opacity-100 ${
+              letterVisible ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
             <div
               className="w-px h-14"
               style={{ background: 'linear-gradient(to bottom, transparent, rgba(247,147,26,0.25))' }}
             />
           </div>
 
-          <p className="text-slate-300 text-xl leading-relaxed">
+          <p
+            className={`text-slate-300 text-xl leading-relaxed transition-all duration-[1400ms] delay-200 ease-out motion-reduce:transition-none motion-reduce:opacity-100 motion-reduce:translate-y-0 ${
+              letterVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
+            }`}
+          >
             {t.closing_body}
           </p>
 
-          <p className="font-mono text-sm text-slate-500 mt-8">
+          <p
+            className={`font-mono text-sm text-slate-500 mt-8 transition-all duration-[1400ms] delay-700 ease-out motion-reduce:transition-none motion-reduce:opacity-100 motion-reduce:translate-y-0 ${
+              letterVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
+            }`}
+          >
             {t.closing_from}
           </p>
+
+          {/* Unlock countdown */}
+          {countdown && (
+            <div className="mt-14">
+              <p className="text-[10px] text-slate-500 uppercase tracking-widest font-mono mb-3">
+                {t.hero_unlocks_in}
+              </p>
+              <p className="font-mono text-2xl tabular-nums">
+                <span style={{ color: C_BTC }}>{countdown.yrs}</span>
+                <span className="text-slate-600 text-xs mx-1.5">{t.hero_yrs}</span>
+                <span style={{ color: C_BTC }}>{countdown.mos}</span>
+                <span className="text-slate-600 text-xs mx-1.5">{t.hero_mo}</span>
+                <span style={{ color: C_BTC }}>{countdown.days}</span>
+                <span className="text-slate-600 text-xs ml-1.5">{t.hero_d}</span>
+              </p>
+            </div>
+          )}
         </div>
       </section>
     </>

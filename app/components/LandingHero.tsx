@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import BabyCharacter from './BabyCharacter';
 import { ChevronDown } from 'lucide-react';
 import { useCurrency } from '@/app/context/currency';
@@ -40,21 +40,38 @@ export default function LandingHero({ totalEurValue, totalInvested, btcBalance }
   const { fmt } = useCurrency();
   const { t } = useLanguage();
 
-  const { progress, journeyAge, remaining } = useMemo(() => {
+  // Time-derived values are populated on mount so SSR and first client render
+  // produce identical markup (Date.now() differs between the two otherwise)
+  const [time, setTime] = useState<{
+    progress: number;
+    journeyAge: number;
+    remaining: { yrs: number; mos: number; days: number };
+  } | null>(null);
+
+  useEffect(() => {
     const now  = Date.now();
     const prog = Math.max(0, Math.min(1, (now - GIFT_START.getTime()) / TOTAL_MS));
     const age  = prog * TOTAL_YEARS;
 
-    const diffMs    = UNLOCK_DATE.getTime() - now;
-    const diffDays  = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-    const yrs       = Math.floor(diffDays / 365);
-    const mos       = Math.floor((diffDays % 365) / 30);
-    const days      = diffDays % 30;
+    const diffMs   = UNLOCK_DATE.getTime() - now;
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-    return { progress: prog, journeyAge: age, remaining: { yrs, mos, days } };
+    setTime({
+      progress: prog,
+      journeyAge: age,
+      remaining: {
+        yrs:  Math.floor(diffDays / 365),
+        mos:  Math.floor((diffDays % 365) / 30),
+        days: diffDays % 30,
+      },
+    });
   }, []);
 
-  const progressPct = (progress * 100).toFixed(2);
+  const progress   = time?.progress   ?? 0;
+  const journeyAge = time?.journeyAge ?? 0;
+  const remaining  = time?.remaining  ?? { yrs: 0, mos: 0, days: 0 };
+
+  const progressPct = time ? (progress * 100).toFixed(2) : '—';
   const pnl         = totalInvested != null && totalEurValue != null ? totalEurValue - totalInvested : null;
   const pnlPct      = pnl != null && totalInvested! > 0 ? (pnl / totalInvested!) * 100 : null;
 
@@ -178,12 +195,12 @@ export default function LandingHero({ totalEurValue, totalInvested, btcBalance }
             {/* Countdown — compact inline */}
             <div className="mt-8">
               <p className="text-[10px] text-slate-500 uppercase tracking-widest font-mono mb-1.5">{t.hero_unlocks_in}</p>
-              <p className="font-mono text-base">
-                <span style={{ color: C_BTC }}>{remaining.yrs}</span>
+              <p className="font-mono text-base tabular-nums" suppressHydrationWarning>
+                <span style={{ color: C_BTC }}>{time ? remaining.yrs : '—'}</span>
                 <span className="text-slate-600 text-xs mx-1">{t.hero_yrs}</span>
-                <span style={{ color: C_BTC }}>{remaining.mos}</span>
+                <span style={{ color: C_BTC }}>{time ? remaining.mos : '—'}</span>
                 <span className="text-slate-600 text-xs mx-1">{t.hero_mo}</span>
-                <span style={{ color: C_BTC }}>{remaining.days}</span>
+                <span style={{ color: C_BTC }}>{time ? remaining.days : '—'}</span>
                 <span className="text-slate-600 text-xs ml-1">{t.hero_d}</span>
               </p>
             </div>

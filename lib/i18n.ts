@@ -57,6 +57,8 @@ export interface Translations {
   bull_body:            string;
   // ── Footer ─────────────────────────────────────────────────────────────────
   footer:               string;
+  // ── Passcode lockscreen ────────────────────────────────────────────────────
+  lock_title:           string;
 }
 
 // ── English ───────────────────────────────────────────────────────────────────
@@ -98,8 +100,8 @@ const en: Translations = {
   final_title_post:     '',
   final_subtitle:       'The gift unlocks.',
   final_at18:           'At 18, Félix could have',
-  closing_body:         'Since the week you were born, your uncle Juan Ma saved for you. Every week. This page has been counting from day one. The rest is yours.',
-  closing_from:         '— Juan Ma, May 2026',
+  closing_body:         'Since the week you were born, your uncle and aunt, Juan and Ani, saved for you. Every week. This page has been counting from day one. The rest is yours.',
+  closing_from:         '— Juan & Ani, May 2026',
 
   scenario_base_badge:  'Base Case',
   scenario_btc_label:   'BTC price in 2044',
@@ -117,6 +119,7 @@ const en: Translations = {
   bull_body:     "60% mirrors Bitcoin's DCA returns during the 2015–2020 window (~65% CAGR). Sustaining it through 2044 would require a major new adoption wave: sovereign wealth funds, central-bank reserves, or Bitcoin becoming the settlement layer of global finance. Over an 18-year horizon that ends in 2044, it's less far-fetched than it sounds today.",
 
   footer: 'Félixfolio · For Félix · Unlocking June 17, 2044',
+  lock_title: 'Enter Passcode',
 };
 
 // ── Spanish ───────────────────────────────────────────────────────────────────
@@ -158,8 +161,8 @@ const es: Translations = {
   final_title_post:     '',
   final_subtitle:       'El regalo se desbloquea.',
   final_at18:           'A los 18, Félix podría tener',
-  closing_body:         'Desde la semana en que naciste, tu tío Juan Ma ahorró para ti. Cada semana. Esta página lo ha registrado desde el primer día. Lo que queda es tuyo.',
-  closing_from:         '— Juan Ma, mayo de 2026',
+  closing_body:         'Desde la semana en que naciste, tus tíos Juan y Ani ahorraron para ti. Cada semana. Esta página lo ha registrado desde el primer día. Lo que queda es tuyo.',
+  closing_from:         '— Juan y Ani, mayo de 2026',
 
   scenario_base_badge:  'Caso base',
   scenario_btc_label:   'Precio BTC en 2044',
@@ -177,6 +180,7 @@ const es: Translations = {
   bull_body:     'El 60% refleja los retornos DCA de Bitcoin durante la ventana 2015–2020 (~65% CAGR). Mantenerlo hasta 2044 requeriría una gran ola de adopción: fondos soberanos, reservas de bancos centrales, o Bitcoin como capa de liquidación de las finanzas globales. En un horizonte de 18 años que termina en 2044, es menos descabellado de lo que suena hoy.',
 
   footer: 'Félixfolio · Para Félix · Se desbloquea el 17 de junio de 2044',
+  lock_title: 'Introducir código',
 };
 
 // ── French ────────────────────────────────────────────────────────────────────
@@ -218,8 +222,8 @@ const fr: Translations = {
   final_title_post:     ' ans',
   final_subtitle:       'Le cadeau se débloque.',
   final_at18:           'À 18 ans, Félix pourrait avoir',
-  closing_body:         "Depuis la semaine de ta naissance, ton oncle Juan Ma a mis de côté pour toi. Chaque semaine. Cette page comptait depuis le premier jour. Le reste t'appartient.",
-  closing_from:         '— Juan Ma, mai 2026',
+  closing_body:         "Depuis la semaine de ta naissance, ton oncle et ta tante, Juan et Ani, ont mis de côté pour toi. Chaque semaine. Cette page comptait depuis le premier jour. Le reste t'appartient.",
+  closing_from:         '— Juan & Ani, mai 2026',
 
   scenario_base_badge:  'Cas de base',
   scenario_btc_label:   'Prix BTC en 2044',
@@ -237,6 +241,7 @@ const fr: Translations = {
   bull_body:     "60% reflète les rendements DCA de Bitcoin sur la fenêtre 2015–2020 (~65% CAGR). Le maintenir jusqu'en 2044 nécessiterait une grande vague d'adoption : fonds souverains, réserves de banques centrales ou Bitcoin comme couche de règlement de la finance mondiale. Sur un horizon de 18 ans se terminant en 2044, c'est moins farfelu qu'il n'y paraît.",
 
   footer: 'Félixfolio · Pour Félix · Déblocage le 17 juin 2044',
+  lock_title: 'Saisir le code',
 };
 
 // ── German ────────────────────────────────────────────────────────────────────
@@ -278,8 +283,8 @@ const de: Translations = {
   final_title_post:     '',
   final_subtitle:       'Das Geschenk wird freigeschaltet.',
   final_at18:           'Mit 18 könnte Félix haben',
-  closing_body:         'Seit der Woche, in der du geboren wurdest, hat dein Onkel Juan Ma für dich gespart. Jede Woche. Diese Seite hat es vom ersten Tag an gezählt. Was nun kommt, gehört dir.',
-  closing_from:         '— Juan Ma, Mai 2026',
+  closing_body:         'Seit der Woche, in der du geboren wurdest, haben dein Onkel und deine Tante, Juan und Ani, für dich gespart. Jede Woche. Diese Seite hat es vom ersten Tag an gezählt. Was nun kommt, gehört dir.',
+  closing_from:         '— Juan & Ani, Mai 2026',
 
   scenario_base_badge:  'Basisszenario',
   scenario_btc_label:   'BTC-Preis 2044',
@@ -297,6 +302,7 @@ const de: Translations = {
   bull_body:     '60% spiegelt die DCA-Renditen von Bitcoin im Fenster 2015–2020 (~65% CAGR) wider. Dies bis 2044 aufrechtzuerhalten würde eine große neue Adoptionswelle erfordern: Staatsfonds, Zentralbankreserven oder Bitcoin als Abrechnungsschicht der globalen Finanzen. Über einen 18-jährigen Horizont bis 2044 ist das weniger abwegig, als es heute klingt.',
 
   footer: 'Félixfolio · Für Félix · Freischaltung am 17. Juni 2044',
+  lock_title: 'Code eingeben',
 };
 
 export const TRANSLATIONS: Record<Lang, Translations> = { en, es, fr, de };

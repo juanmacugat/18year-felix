@@ -107,6 +107,18 @@
 
 .animate-scroll-nudge { animation: scroll-nudge 2s ease-out infinite; }
 
+@keyframes passcode-shake {
+  0%, 100%       { transform: translateX(0); }
+  15%, 45%, 75%  { transform: translateX(-8px); }
+  30%, 60%, 90%  { transform: translateX(8px); }
+}
+.animate-passcode-shake { animation: passcode-shake 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both; }
+
+@keyframes passcode-unlock {
+  to { opacity: 0; transform: scale(1.08); filter: blur(8px); }
+}
+.animate-passcode-unlock { animation: passcode-unlock 0.6s ease-out forwards; }
+
 /* ── Utility classes ─────────────────────────────────────────── */
 
 .animate-baby-crawl   { animation: baby-crawl  2.4s ease-in-out infinite; }

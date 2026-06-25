@@ -3,6 +3,7 @@ import { Figtree, JetBrains_Mono, Fredoka } from 'next/font/google';
 import { cookies } from 'next/headers';
 import { type Lang } from '@/lib/i18n';
 import { LanguageProvider } from '@/app/context/language';
+import PasscodeGate from '@/app/components/PasscodeGate';
 import './globals.css';
 
 const figtree  = Figtree({ subsets: ['latin'], variable: '--font-sans', weight: ['400', '500', '600', '700'] });
@@ -10,7 +11,7 @@ const mono     = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono', w
 const fredoka  = Fredoka({ subsets: ['latin'], variable: '--font-fredoka', weight: ['400', '500', '600', '700'] });
 
 export const metadata: Metadata = {
-  title: 'Félixfolio — For Félix',
+  title: 'Hey Félix!',
   description: "18 years of Bitcoin DCA — a gift for Félix, unlocking June 17, 2044",
 };
 
@@ -31,7 +32,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           Skip to content
         </a>
         <LanguageProvider initialLang={lang}>
-          {children}
+          <PasscodeGate>
+            {children}
+          </PasscodeGate>
         </LanguageProvider>
       </body>
     </html>
