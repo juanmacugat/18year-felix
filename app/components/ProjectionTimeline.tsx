@@ -11,8 +11,8 @@ type Scenario = 'bear' | 'base' | 'bull';
 const MILESTONE_AGES = [0, 0.5, 2, 5, 10, 13, 16, 17.5];
 
 // ── Constants ─────────────────────────────────────────────────────────────────
-const GIFT_START  = new Date('2026-05-12');
-const UNLOCK_DATE = new Date('2044-06-17');
+const GIFT_START  = new Date('2026-05-29');
+const UNLOCK_DATE = new Date('2044-05-29');
 const WEEKLY_DCA  = 20;
 const MONTHLY_DCA = WEEKLY_DCA * (365.25 / 7 / 12);
 

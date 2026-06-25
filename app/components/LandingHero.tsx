@@ -13,8 +13,8 @@ interface Props {
   btcBalance:    number | null;
 }
 
-const GIFT_START  = new Date('2026-05-12');
-const UNLOCK_DATE = new Date('2044-06-17');
+const GIFT_START  = new Date('2026-05-29');
+const UNLOCK_DATE = new Date('2044-05-29');
 const TOTAL_MS    = UNLOCK_DATE.getTime() - GIFT_START.getTime();
 const TOTAL_YEARS = 18;
 
@@ -125,9 +125,9 @@ export default function LandingHero({ totalEurValue, totalInvested, btcBalance }
             </p>
             <p className="text-slate-500 text-sm mb-10">
               {t.hero_unlocking}{' '}
-              <span className="text-slate-300 font-medium">June 17, 2044</span>
+              <span className="text-slate-300 font-medium">May 29, 2044</span>
               {' '}· {t.hero_started}{' '}
-              <span className="text-slate-300 font-medium">May 12, 2026</span>
+              <span className="text-slate-300 font-medium">May 29, 2026</span>
             </p>
 
             {/* ── Primary metric ── */}

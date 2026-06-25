@@ -12,7 +12,7 @@ const fredoka  = Fredoka({ subsets: ['latin'], variable: '--font-fredoka', weigh
 
 export const metadata: Metadata = {
   title: 'Hey Félix!',
-  description: "18 years of Bitcoin DCA — a gift for Félix, unlocking June 17, 2044",
+  description: "18 years of Bitcoin DCA — a gift for Félix, unlocking May 29, 2044",
 };
 
 const VALID_LANGS: Lang[] = ['en', 'es', 'fr', 'de'];

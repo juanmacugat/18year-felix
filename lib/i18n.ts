@@ -95,7 +95,7 @@ const en: Translations = {
   milestone_6:          'Almost 18...',
   milestone_7:          'Any day now...',
 
-  final_date:           'June 17, 2044',
+  final_date:           'May 29, 2044',
   final_title_pre:      'Félix turns ',
   final_title_post:     '',
   final_subtitle:       'The gift unlocks.',
@@ -118,7 +118,7 @@ const en: Translations = {
   bull_headline: 'Early-cycle territory: aggressive but not impossible',
   bull_body:     "60% mirrors Bitcoin's DCA returns during the 2015–2020 window (~65% CAGR). Sustaining it through 2044 would require a major new adoption wave: sovereign wealth funds, central-bank reserves, or Bitcoin becoming the settlement layer of global finance. Over an 18-year horizon that ends in 2044, it's less far-fetched than it sounds today.",
 
-  footer: 'Félixfolio · For Félix · Unlocking June 17, 2044',
+  footer: 'Félixfolio · For Félix · Unlocking May 29, 2044',
   lock_title: 'Enter Passcode',
 };
 
@@ -156,7 +156,7 @@ const es: Translations = {
   milestone_6:          'Casi 18...',
   milestone_7:          'Ya casi...',
 
-  final_date:           '17 de junio de 2044',
+  final_date:           '29 de mayo de 2044',
   final_title_pre:      'Félix cumple ',
   final_title_post:     '',
   final_subtitle:       'El regalo se desbloquea.',
@@ -179,7 +179,7 @@ const es: Translations = {
   bull_headline: 'Territorio de ciclo temprano: agresivo pero no imposible',
   bull_body:     'El 60% refleja los retornos DCA de Bitcoin durante la ventana 2015–2020 (~65% CAGR). Mantenerlo hasta 2044 requeriría una gran ola de adopción: fondos soberanos, reservas de bancos centrales, o Bitcoin como capa de liquidación de las finanzas globales. En un horizonte de 18 años que termina en 2044, es menos descabellado de lo que suena hoy.',
 
-  footer: 'Félixfolio · Para Félix · Se desbloquea el 17 de junio de 2044',
+  footer: 'Félixfolio · Para Félix · Se desbloquea el 29 de mayo de 2044',
   lock_title: 'Introducir código',
 };
 
@@ -217,7 +217,7 @@ const fr: Translations = {
   milestone_6:          'Presque 18...',
   milestone_7:          'Plus que quelques jours...',
 
-  final_date:           '17 juin 2044',
+  final_date:           '29 mai 2044',
   final_title_pre:      'Félix a ',
   final_title_post:     ' ans',
   final_subtitle:       'Le cadeau se débloque.',
@@ -240,7 +240,7 @@ const fr: Translations = {
   bull_headline: 'Territoire de début de cycle : ambitieux mais pas impossible',
   bull_body:     "60% reflète les rendements DCA de Bitcoin sur la fenêtre 2015–2020 (~65% CAGR). Le maintenir jusqu'en 2044 nécessiterait une grande vague d'adoption : fonds souverains, réserves de banques centrales ou Bitcoin comme couche de règlement de la finance mondiale. Sur un horizon de 18 ans se terminant en 2044, c'est moins farfelu qu'il n'y paraît.",
 
-  footer: 'Félixfolio · Pour Félix · Déblocage le 17 juin 2044',
+  footer: 'Félixfolio · Pour Félix · Déblocage le 29 mai 2044',
   lock_title: 'Saisir le code',
 };
 
@@ -278,7 +278,7 @@ const de: Translations = {
   milestone_6:          'Fast 18...',
   milestone_7:          'Jeden Moment...',
 
-  final_date:           '17. Juni 2044',
+  final_date:           '29. Mai 2044',
   final_title_pre:      'Félix wird ',
   final_title_post:     '',
   final_subtitle:       'Das Geschenk wird freigeschaltet.',
@@ -301,7 +301,7 @@ const de: Translations = {
   bull_headline: 'Frühe Zykluszone: ehrgeizig, aber nicht unmöglich',
   bull_body:     '60% spiegelt die DCA-Renditen von Bitcoin im Fenster 2015–2020 (~65% CAGR) wider. Dies bis 2044 aufrechtzuerhalten würde eine große neue Adoptionswelle erfordern: Staatsfonds, Zentralbankreserven oder Bitcoin als Abrechnungsschicht der globalen Finanzen. Über einen 18-jährigen Horizont bis 2044 ist das weniger abwegig, als es heute klingt.',
 
-  footer: 'Félixfolio · Für Félix · Freischaltung am 17. Juni 2044',
+  footer: 'Félixfolio · Für Félix · Freischaltung am 29. Mai 2044',
   lock_title: 'Code eingeben',
 };
 

@@ -1,20 +1,12 @@
+import { cache } from 'react';
 import { getCurrentPrices, getGeckoId } from '@/lib/coingecko';
-import { GIFT_ASSETS, isGiftAsset, filterGiftTrades } from '@/lib/filters';
+import { GIFT_ASSETS, filterGiftTrades } from '@/lib/filters';
 
 const BASE = 'https://api.bitpanda.com/v1';
 
 function authHeaders() {
   if (!process.env.BITPANDA_API_KEY) throw new Error('BITPANDA_API_KEY is not set');
   return { 'X-Api-Key': process.env.BITPANDA_API_KEY };
-}
-
-async function apiGet<T>(path: string, auth = true, revalidate = 60): Promise<T> {
-  const res = await fetch(`${BASE}${path}`, {
-    headers: auth ? authHeaders() : {},
-    next: { revalidate },
-  });
-  if (!res.ok) throw new Error(`Bitpanda ${res.status}: ${path}`);
-  return res.json() as Promise<T>;
 }
 
 export interface AssetRow {
@@ -40,13 +32,31 @@ export interface Trade {
     amount_cryptocoin: string;
     amount_fiat: string;
     price: string;
+    is_savings?: boolean;
     time: { date_iso8601?: string; unix?: string };
   };
 }
 
-export async function getPortfolio(): Promise<Portfolio> {
-  type CryptoList = { data: { attributes: { cryptocoin_symbol: string; balance: string } }[] };
+// Request-memoised so getPortfolio() and getTotalInvested() share one trades fetch per render
+export const getAllTrades = cache(async (): Promise<Trade[]> => {
+  const trades: Trade[] = [];
+  let cursor: string | null = null;
+  do {
+    const qs: string = `page_size=100${cursor ? `&cursor=${cursor}` : ''}`;
+    const res = await fetch(`${BASE}/trades?${qs}`, {
+      headers: authHeaders(),
+      next: { revalidate: 0 },
+    });
+    if (res.status === 401) break;
+    if (!res.ok) throw new Error(`Bitpanda ${res.status}: /trades`);
+    const { data, meta }: { data: Trade[]; meta?: { next_cursor?: string } } = await res.json();
+    trades.push(...(data ?? []));
+    cursor = meta?.next_cursor ?? null;
+  } while (cursor);
+  return trades;
+});
 
+export async function getPortfolio(): Promise<Portfolio> {
   // Build symbol → CoinGecko ID map for all tracked assets
   const symbolToId: Record<string, string> = {};
   for (const sym of GIFT_ASSETS) {
@@ -55,18 +65,24 @@ export async function getPortfolio(): Promise<Portfolio> {
   }
   const geckoIds = Object.values(symbolToId);
 
-  const [prices, { data: cryptos }] = await Promise.all([
+  const [prices, allTrades] = await Promise.all([
     getCurrentPrices(geckoIds),
-    apiGet<CryptoList>('/wallets'),
+    getAllTrades(),
   ]);
+
+  // Derive the gift-scoped balance from filtered trades, not /wallets,
+  // so it stays in sync with the same filter used for totalInvested.
+  const filtered = filterGiftTrades(allTrades);
+  const balanceBySymbol: Record<string, number> = {};
+  for (const tr of filtered) {
+    const delta = tr.type === 'buy' ? tr.crypto : -tr.crypto;
+    balanceBySymbol[tr.symbol] = (balanceBySymbol[tr.symbol] ?? 0) + delta;
+  }
 
   const assets: AssetRow[] = [];
   let total = 0;
-
-  for (const w of cryptos) {
-    const { cryptocoin_symbol: sym, balance: raw } = w.attributes;
-    if (!isGiftAsset(sym)) continue;
-    const bal = parseFloat(raw);
+  for (const sym of GIFT_ASSETS) {
+    const bal = balanceBySymbol[sym] ?? 0;
     if (bal === 0) continue;
 
     const id       = symbolToId[sym];
@@ -85,24 +101,6 @@ export async function getPortfolio(): Promise<Portfolio> {
   };
 
   return { assets, totalEurValue: total, exchangeRates };
-}
-
-export async function getAllTrades(): Promise<Trade[]> {
-  const trades: Trade[] = [];
-  let cursor: string | null = null;
-  do {
-    const qs: string = `page_size=100${cursor ? `&cursor=${cursor}` : ''}`;
-    const res = await fetch(`${BASE}/trades?${qs}`, {
-      headers: authHeaders(),
-      next: { revalidate: 0 },
-    });
-    if (res.status === 401) break;
-    if (!res.ok) throw new Error(`Bitpanda ${res.status}: /trades`);
-    const { data, meta }: { data: Trade[]; meta?: { next_cursor?: string } } = await res.json();
-    trades.push(...(data ?? []));
-    cursor = meta?.next_cursor ?? null;
-  } while (cursor);
-  return trades;
 }
 
 export async function getTotalInvested(): Promise<number | null> {
