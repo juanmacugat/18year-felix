@@ -20,7 +20,7 @@ const STAGES = [
   { maxAge: Infinity, src: '/milestones/conductor-baton.webp',            alt: "Félix at 18, holding a conductor's baton, in command",  anim: 'baby-breathe', dur: '4s'   },
 ] as const;
 
-const PRIORITY_SRCS = new Set([STAGES[0].src, STAGES[1].src]);
+const PRIORITY_SRCS = new Set<string>([STAGES[0].src, STAGES[1].src]);
 
 function getStageIdx(age: number): number {
   const idx = STAGES.findIndex(s => age < s.maxAge);
