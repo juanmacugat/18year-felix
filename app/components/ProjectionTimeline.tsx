@@ -255,7 +255,6 @@ export default function ProjectionTimeline({ totalEurValue, btcPriceEur }: Props
                   width:      `${Math.max(0.5, progress * 100)}%`,
                   background: 'linear-gradient(90deg, #F7931A, #FFD700)',
                   boxShadow:  '0 0 10px rgba(247,147,26,0.5)',
-                  transition: 'width 0.05s linear',
                 }}
               />
               {/* Glowing dot at current position */}

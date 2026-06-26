@@ -20,13 +20,15 @@ export default function PasscodeGate({ children }: { children: React.ReactNode }
     if (sessionStorage.getItem(STORAGE_KEY) === '1') setUnlocked(true);
   }, []);
 
-  // Lock the page scroll while the gate is up
+  // Lock the page scroll while the gate is up; explicitly restore when unlocked
   useEffect(() => {
-    if (unlocked && !closing) return;
-    const prev = document.body.style.overflow;
+    if (unlocked) {
+      document.body.style.overflow = '';
+      return;
+    }
     document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = prev; };
-  }, [unlocked, closing]);
+    return () => { document.body.style.overflow = ''; };
+  }, [unlocked]);
 
   const handleDigit = useCallback((digit: string) => {
     setEntered(prev => {

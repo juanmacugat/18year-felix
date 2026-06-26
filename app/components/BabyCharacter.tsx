@@ -1,6 +1,6 @@
 'use client';
 
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import Image from 'next/image';
 
 interface BabyProps {
@@ -20,7 +20,7 @@ const STAGES = [
   { maxAge: Infinity, src: '/milestones/conductor-baton.webp',            alt: "Félix at 18, holding a conductor's baton, in command",  anim: 'baby-breathe', dur: '4s'   },
 ] as const;
 
-const FIRST_STAGE_SRC = STAGES[0].src;
+const PRIORITY_SRCS = new Set([STAGES[0].src, STAGES[1].src]);
 
 function getStageIdx(age: number): number {
   const idx = STAGES.findIndex(s => age < s.maxAge);
@@ -28,7 +28,17 @@ function getStageIdx(age: number): number {
 }
 
 function BabyCharacter({ age, className = '' }: BabyProps) {
-  const stage = STAGES[getStageIdx(age)];
+  const stageIdx = getStageIdx(age);
+  const stage = STAGES[stageIdx];
+
+  // Preload the next stage image as soon as the current one is shown
+  useEffect(() => {
+    const nextIdx = stageIdx + 1;
+    if (nextIdx < STAGES.length) {
+      const img = new window.Image();
+      img.src = STAGES[nextIdx].src;
+    }
+  }, [stageIdx]);
 
   return (
     <div className={`relative select-none ${className}`}>
@@ -46,7 +56,7 @@ function BabyCharacter({ age, className = '' }: BabyProps) {
           fill
           sizes="(max-width: 640px) 290px, (max-width: 1024px) 320px, 416px"
           className="object-contain drop-shadow-2xl"
-          priority={stage.src === FIRST_STAGE_SRC}
+          priority={PRIORITY_SRCS.has(stage.src)}
         />
       </div>
     </div>
